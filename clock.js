@@ -82,24 +82,51 @@
 
 	document.body.appendChild(renderer.view);
 
+	var monthRanges = [
+		{start: 0, end: 0, fill: 0xFF7640}
+	];
 	var dayRanges = [
-		{start: 0, end: 0, fill: 0x2A4480}
+		{start: 0, end: 0, fill: 0xFFAD40}
 	];
 	var hourRanges = [
-		{start: 0, end: 0, fill:  0x6C8CD5}
+		{start: 0, end: 0, fill: 0x3F66BF}
 	];
 	var minuteRanges = [
-		{start: 0, end: 0, fill: 0x4671D5}
+		{start: 0, end: 0, fill:  0x799EF2}
 	];
 	var secondRanges = [
-		{start: 0, end: 0, fill: 0x6C8CD5}
+		{start: 0, end: 0, fill: 0x99B8FF}
 	];
+
+	var monthRadius = 175;
+	var monthWidth = 6.25;
+
+	var dayRadius = monthRadius - monthWidth;
+	var dayWidth = 12.5;
+
+	var hourRadius = dayRadius - dayWidth;
+	var hourWidth = 25;
+
+	var minuteRadius = hourRadius - hourWidth;
+	var minuteWidth = 30;
+
+	var secondRadius = minuteRadius - minuteWidth;
+	var secondWidth = 40;
+
+	var monthRing = drawSegmentedRing({
+		x: 200,
+		y: 200,
+		radius: monthRadius,
+		width: monthWidth,
+		segments: 12,
+		ranges: monthRanges
+	});
 
 	var dayRing = drawSegmentedRing({
 		x: 200,
 		y: 200,
-		radius: 150,
-		width: 20,
+		radius: dayRadius,
+		width: dayWidth,
 		segments: 31,
 		ranges: dayRanges
 	});
@@ -107,24 +134,24 @@
 	var hourRing = drawSegmentedRing({
 		x: 200,
 		y: 200,
-		radius: 130,
-		width: 10,
+		radius: hourRadius,
+		width: hourWidth,
 		segments: 24,
 		ranges: hourRanges
 	});
 	var minuteRing = drawSegmentedRing({
 		x: 200,
 		y: 200,
-		radius: 120,
-		width: 5,
+		radius: minuteRadius,
+		width: minuteWidth,
 		segments: 60,
 		ranges: minuteRanges
 	});
 	var secondRing = drawSegmentedRing({
 		x: 200,
 		y: 200,
-		radius: 115,
-		width: 5,
+		radius: secondRadius,
+		width: secondWidth,
 		segments: 60,
 		ranges: secondRanges
 	});
@@ -142,6 +169,9 @@
 		time.minutes = d.getMinutes();
 		time.hours = d.getHours();
 		time.days = d.getDate();
+		time.month = d.getMonth() + 1;
+
+		monthRanges[0].end = time.month;
 		secondRanges[0].end = time.seconds;
 		minuteRanges[0].end = time.minutes;
 		hourRanges[0].end = time.hours;
@@ -155,6 +185,7 @@
 	}, 1000);
 
 	function animate(){
+		monthRing.draw();
 		dayRing.draw();
 		hourRing.draw();
 		minuteRing.draw();
