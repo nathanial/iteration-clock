@@ -25,9 +25,9 @@
 			//graphics.beginFill(0xffffff);
 
 			for(var i = 0; i < options.segments; i += 1){
-				var theta1 = (increment * i) * Math.PI / 180;
-				var thetaMid = (increment * (i+0.5)) * Math.PI / 180;
-				var theta2 = (increment * (i+1)) * Math.PI / 180;
+				var theta1 = (increment * i - 90) * Math.PI / 180;
+				var thetaMid = (increment * (i+0.5) - 90) * Math.PI / 180;
+				var theta2 = (increment * (i+1) - 90) * Math.PI / 180;
 				var x1 = r1 * Math.cos(theta1) + x0;
 				var y1 = r1 * Math.sin(theta1) + y0;
 				var x2 = r2 * Math.cos(theta1) + x0;
@@ -64,6 +64,7 @@
 		}
 
 		draw();
+
 
 		stage.addChild(graphics);
 
